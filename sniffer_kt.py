@@ -8,7 +8,7 @@ from scapy.all import *
 from scapy.layers import *
 import threading
 
-SLEEP_TIME = 5 # Number of seconds to sniff (update frequency)
+SLEEP_TIME = 1 # Number of seconds to sniff (update frequency)
 
 class PacketScanner(threading.Thread):
     def run(self):

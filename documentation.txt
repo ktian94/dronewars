@@ -1,0 +1,12 @@
+Attack:
+
+- attack.py
+This program constantly sends land commmands and owner_mac commands to the entire range of IP's in the AR Drone network. Thus, we don't have to sniff packets to determine the destination IP. We can force a drone to land and also associate a chosen MAC to disconnect other people to the drone.
+
+- sniffer.py
+This program sniffs for packets using the airport utility on Mac. It then uses scapy to parse the packets stored in PCAP files. This is useful to sniff for MAC addresses, in case the other team blocks all MAC addresses except for their own. This MAC address can be fed as an argument to attack.py. Note: sometimes the airport utility doesn't work through Python and has to be run on the command line.
+
+Defense:
+
+- defend.txt
+This contains three commands to configure iptables on the drone to only accept our chosen MAC address. We get access to the OS of the drone through telnet. This forces the opponent to forge the correct MAC address in order to communicate with our drone.
